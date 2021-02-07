@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import './index.css';
-import Calculator from './calculator/index';
+import Calculator from './calculator/calculator';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(

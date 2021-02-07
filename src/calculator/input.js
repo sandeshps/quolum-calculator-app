@@ -23,6 +23,7 @@ class Input extends React.Component {
       attributes.placeholder = this.props.placeholder;
       attributes.onKeyPress = this.onChangeHandler;
       if (this.input) {
+        this.input.removeAttribute("value");
         this.input.value = "";
       }
     } else if (!this.props.placeholder) {
