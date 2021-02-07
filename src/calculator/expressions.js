@@ -4,7 +4,7 @@ class Expressions extends React.Component {
 
   constructor(props) {
     super(props);
-    this.operations = null;
+    this.expressions = null;
   }
 
   clickHandler = (e) => {
@@ -14,17 +14,17 @@ class Expressions extends React.Component {
   }
 
   componentDidMount = () => {
-    this.operations.addEventListener("click", this.clickHandler);
+    this.expressions.addEventListener("click", this.clickHandler);
   }
 
   componentWillUnmount = () => {
-    this.operations.removeEventListener("click", this.clickHandler);
+    this.expressions.removeEventListener("click", this.clickHandler);
   }
 
   render() {
 
     return (
-      <div className="operations" ref={el => { this.operations = el }}>
+      <div className="expressions" ref={el => { this.expressions = el }}>
 
         <div className="row">
           <div className="action-item" value="1"> 1 </div>
