@@ -11,18 +11,11 @@ class Calculator extends React.Component {
     super(props);
     this.state = {
       result: 0,
+      mode: 0,
       expression: 0
     };
     this.stack = [];
     this.pointer = 0;
-    this.mappings = {
-      "+": true,
-      "/": true,
-      "-": true,
-      "*": true,
-      "=": true,
-      "clear": true
-    };
     this.operand = "";
   }
 
@@ -32,24 +25,20 @@ class Calculator extends React.Component {
       expression = this.state.expression + value;
     }
 
-    // Operator match.
-    if (this.mappings[value] && value != "clear") {
-      this.stack[this.pointer] = parseInt(this.operand);
+    if (value == "clear") {
+      this.stack = [];
+      this.pointer = 0;
+      this.operand = "";
+      this.setState({result: 0, expression: 0});
+    } else if (value == "+" || value == "/" || value == "*" || value == "=" || value == "-") {
+      // Operator match from normal mode
+      this.stack[this.pointer] = this.operand;
       this.operand = "";
       this.pointer++;
 
       // Do the math of the intermediate.
       if (this.pointer > 2) {
-        let result = null;
-        if (this.stack[1] == "+") {
-          result = this.stack[0] + this.stack[2];
-        } else if (this.stack[1] == "-") {
-          result = this.stack[0] - this.stack[2];
-        } else if (this.stack[1] == "/") {
-          result = this.stack[0] / this.stack[2];
-        } else if (this.stack[1] == "*") {
-          result = this.stack[0] * this.stack[2];
-        }
+        let result = eval(this.stack[0] + this.stack[1] + this.stack[2]);
         this.stack[0] = result;
         this.stack[1] = value;
         this.pointer = 2;
@@ -60,16 +49,28 @@ class Calculator extends React.Component {
         this.pointer++;
         this.setState({expression: expression});
       }
-    } else if (value == "clear") {
-      this.stack = [];
-      this.pointer = 0;
-      this.operand = "";
-      this.setState({result: 0, expression: 0});
+    } else if (value == "flip") {
+      this.operand = -(this.operand);
+      this.setState({result: this.operand});
+    } else if (value == "square") {
+      this.operand = this.operand * this.operand;
+      this.setState({result: parseInt(this.operand)});
+    } else if (value == "square_root") {
+      this.operand = Math.sqrt(Math.abs(this.operand));
+      this.setState({result: this.operand});
     } else if (value >= 0 && value <= 9) {
       // Allow only numbers in case of non arithmetic operators.
       this.operand += value;
       this.setState({expression: expression, result: this.operand});
     }
+  }
+
+  toggleMode = () => {
+    // Clear all.
+    this.operand = "";
+    this.stack = [];
+    this.pointer = 0;
+    this.setState({mode: !this.state.mode, result: 0, expression: 0});
   }
 
   render() {
@@ -83,7 +84,8 @@ class Calculator extends React.Component {
             placeholder={(this.state.expression == "0") ? "0": undefined}
           />
           <Input key={2} readOnly={true} value={this.state.result}/>
-          <Expressions onClick={this.onChangeHandler}/>
+          <Expressions mode={(this.state.mode) ? "scientific" : "normal"} onClick={this.onChangeHandler}/>
+          <button className="btn-mode-selector" onClick={() => this.toggleMode()}> {(this.state.mode == 0) ? "Scientific": "Normal"} </button>
         </div>
       </div>
     );
