@@ -1,0 +1,44 @@
+.container {
+
+  .calculator {
+    width: 500px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .input-box {
+      width: 98.4%;
+      height: 50px;
+      text-align: right;
+    }
+
+    .operations {
+      table {
+        width: 100%;
+        input[type="button"] {
+          height: 50px;
+          width: 123px;
+          padding: 0px;
+        }
+      }
+      .row {
+        display: flex;
+        .action-item {
+          height: 50px;
+          width: 123px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid;
+          cursor: pointer;
+        }
+      }
+
+    }
+  }
+
+  .align-right {
+    text-align: right;
+  }
+
+}
