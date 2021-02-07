@@ -24,7 +24,6 @@ class Expressions extends React.Component {
   render() {
 
     return (
-      <Fragment>
       <div className="operations" ref={el => { this.operations = el }}>
 
         <div className="row">
@@ -80,7 +79,6 @@ class Expressions extends React.Component {
         </div>
 
       </div>
-      </Fragment>
     );
 
   }

@@ -1,10 +1,38 @@
+// Helper css for body and root id also included here.
+body {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  width: 100%;
+}
+
 .container {
+
+  height: 100vh;
+  width: 100%;
+
+  @mixin light-mode() {
+    background-color: #f0f0f0;
+    color: #000;
+  }
+
+  @mixin dark-mode() {
+    background-color: #666;
+    color: #fff;
+  }
 
   .calculator {
     width: 500px;
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
+
 
     .input-box {
       width: 98.4%;
@@ -21,6 +49,7 @@
           padding: 0px;
         }
       }
+      
       .row {
         display: flex;
         .action-item {
@@ -36,17 +65,42 @@
 
     }
 
-    .btn-mode-selector {
+    .btn-mode-selector, .btn-theme-selector {
       cursor: pointer;
       float: right;
       margin-top: 20px;
       width: 100px;
       height: 40px;
     }
+
+    .theme-holder {
+      display: inline-block;
+      width: 100%;
+    }
   }
 
   .align-right {
     text-align: right;
+  }
+
+  &[data-theme-selected="light"] {
+    background-color: #fff;
+    .action-item {
+      @include light-mode();
+    }
+    .btn-mode-selector, .btn-theme-selector {
+      @include light-mode();
+    }
+  }
+
+  &[data-theme-selected="dark"] {
+    background-color: #000;
+    .action-item {
+      @include dark-mode();
+    }
+    .btn-mode-selector, .btn-theme-selector {
+      @include dark-mode();
+    }
   }
 
 }

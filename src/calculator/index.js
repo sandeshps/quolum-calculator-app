@@ -12,7 +12,8 @@ class Calculator extends React.Component {
     this.state = {
       result: 0,
       mode: 0,
-      expression: 0
+      expression: 0,
+      theme: "light"
     };
     this.stack = [];
     this.pointer = 0;
@@ -73,9 +74,16 @@ class Calculator extends React.Component {
     this.setState({mode: !this.state.mode, result: 0, expression: 0});
   }
 
+  switchTheme = (theme) => {
+    this.setState({theme: theme});
+  }
+
   render() {
+
+
+
     return (
-      <div className="container">
+      <div className="container" data-theme-selected={this.state.theme}>
         <div className="calculator">
           <Input
             key={1}
@@ -85,7 +93,11 @@ class Calculator extends React.Component {
           />
           <Input key={2} readOnly={true} value={this.state.result}/>
           <Expressions mode={(this.state.mode) ? "scientific" : "normal"} onClick={this.onChangeHandler}/>
-          <button className="btn-mode-selector" onClick={() => this.toggleMode()}> {(this.state.mode == 0) ? "Scientific": "Normal"} </button>
+          <button className="btn-mode-selector" onClick = {() => this.toggleMode()}> {(this.state.mode == 0) ? "Scientific": "Normal"} </button>
+          <div className="theme-holder">
+            <button className="btn-theme-selector" onClick = {() => this.switchTheme("light")}>Light Theme</button>
+            <button className="btn-theme-selector" onClick = {() => this.switchTheme("dark")}>Dark Theme</button>
+          </div>
         </div>
       </div>
     );
